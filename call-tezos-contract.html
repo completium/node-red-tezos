@@ -3,11 +3,13 @@
         category: 'function',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            rpc: {value:"https://api.tez.ie/rpc/mainnet"},
+            addr: {value:'tz1NAozDvi5e7frVq9cUaC3uXQQannemB8Jw'}
         },
         inputs:1,
         outputs:1,
-        icon: "file.png",
+        icon: "font-awesome/fa-chain",
         label: function() {
             return this.name||"call-tezos-contract";
         }
@@ -16,7 +18,15 @@
 
 <script type="text/html" data-template-name="call-tezos-contract">
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider</label>
+        <input type="text" id="node-input-rpc" placeholder="URL of RPC provider">
+    </div>
+    <div class="form-row">
+        <label for="node-input-addr"><i class="fa fa-address-card"></i> Address </label>
+        <input type="text" id="node-input-addr" placeholder="Contract address">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
