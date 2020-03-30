@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('call-tezos-contract',{
-        category: 'function',
+        category: 'Tezos',
         color: '#a6bbcf',
         defaults: {
             name: {value:""},
@@ -9,10 +9,11 @@
         },
         inputs:1,
         outputs:1,
-        icon: "font-awesome/fa-chain",
+        icon: "Tezos_40x60.svg",
         label: function() {
-            return this.name||"call-tezos-contract";
-        }
+            return this.name||"call contract";
+        },
+        paletteLabel: "call contract"
     });
 </script>
 
