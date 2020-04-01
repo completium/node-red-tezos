@@ -14,16 +14,42 @@ module.exports = function(RED) {
         this.arg = config.arg;
         var node = this;
         node.on('input', function(msg) {
-            console.log(node.mnemonic);
             Tezos.setProvider({ rpc: node.rpc });
-            Tezos.tz
+            Tezos.importKey(
+                node.email,
+                node.password,
+                node.mnemonic,
+                node.secret
+            );
+            Tezos.contract.at(node.addr)
+            .then(contract => {
+                const i = 7;
+                console.log(`Incrementing storage value by ${i}...`);
+                return contract.methods.increment(i).send();
+            })
+            .then(op => {
+                console.log(`Waiting for ${op.hash} to be confirmed...`);
+                return op.confirmation(1).then(() => op.hash);
+            })
+            .then(hash => {
+                    console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`);
+                    msg.payload = { res:true, op:hash };
+                    node.send(msg);
+                })
+            .catch(error => {
+                  println(`Error: ${JSON.stringify(error, null, 2)}`);
+                  msg.payload = { res:false };
+                  node.send(msg);
+            });
+        });
+        /* Tezos.tz
                 .getBalance(node.addr)
                 .then(balance => {
                     msg.payload = balance.toNumber() / 1000000;
                     node.send(msg);
                 })
                 .catch(error => console.log(JSON.stringify(error)));
-        });
+        }); */
     }
     RED.nodes.registerType("call-tezos-contract",CallTezosContract);
 }
