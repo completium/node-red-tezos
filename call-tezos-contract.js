@@ -10,6 +10,8 @@ module.exports = function(RED) {
         this.password = obj.password;
         this.mnemonic = obj.mnemonic.join(' ');
         this.secret = obj.secret;
+        this.entry = config.entry;
+        this.arg = config.arg;
         var node = this;
         node.on('input', function(msg) {
             console.log(node.mnemonic);
