@@ -3,9 +3,10 @@
         category: 'Tezos',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""},
-            rpc: {value:"https://api.tez.ie/rpc/mainnet"},
-            addr: {value:'tz1NAozDvi5e7frVq9cUaC3uXQQannemB8Jw'}
+            name: { value:"" },
+            rpc: { value:"https://api.tez.ie/rpc/mainnet" },
+            addr: { value:'tz1NAozDvi5e7frVq9cUaC3uXQQannemB8Jw' },
+            faucet: { value:"" }
         },
         inputs:1,
         outputs:1,
@@ -19,12 +20,16 @@
 
 <script type="text/html" data-template-name="call-tezos-contract">
     <div class="form-row">
-        <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider</label>
+        <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider </label>
         <input type="text" id="node-input-rpc" placeholder="URL of RPC provider">
     </div>
     <div class="form-row">
         <label for="node-input-addr"><i class="fa fa-address-card"></i> Address </label>
         <input type="text" id="node-input-addr" placeholder="Contract address">
+    </div>
+    <div class="form-row">
+        <label for="node-input-faucet"><i class="fa fa-address-book-o"></i> Faucet </label>
+        <input type="text" id="node-input-faucet" placeholder="Paste faucet data here">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
