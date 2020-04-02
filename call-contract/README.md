@@ -1,2 +1,2 @@
 # node-red-call-tezos-contract
-A node-red node to call a tezos smart contract using Taquito library
+A node-red node to call a tezos smart contract.

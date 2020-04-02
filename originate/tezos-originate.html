@@ -1,29 +1,30 @@
 <script type="text/javascript">
-    RED.nodes.registerType('tezos-call-contract',{
+    RED.nodes.registerType('tezos-originate',{
         category: 'Tezos',
-        color: '#a6bbcf',
+        color: '#C7E9C0',
         defaults: {
             name: { value:"" },
-            rpc: { value:"https://api.tez.ie/rpc/mainnet" },
-            addr: { value:'tz1NAozDvi5e7frVq9cUaC3uXQQannemB8Jw' },
+            rpc: { value:"https://api.tez.ie/rpc/carthagenet" },
             faucet: { value:"" },
-            entry: { value:"" },
-            arg: { value:""}
+            code: { value:'' },
+            storage: { value:''}
         },
         inputs:1,
         outputs:1,
         icon: "Tezos_40x60.svg",
         label: function() {
-            return this.name||"call contract";
+            return this.name||"originate";
         },
-        paletteLabel: "call contract",
+        paletteLabel: "originate",
         oneditprepare: function() {
             $("#node-input-faucet").typedInput({default:'json',types:['json']});
+            $("#node-input-code").typedInput({default:'json',types:['json']});
+            $("#node-input-storage").typedInput({default:'json',types:['json']});
         }
     });
 </script>
 
-<script type="text/html" data-template-name="tezos-call-contract">
+<script type="text/html" data-template-name="tezos-originate">
     <div class="form-row">
         <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider </label>
         <input type="text" id="node-input-rpc" placeholder="URL of RPC provider">
@@ -33,19 +34,15 @@
         <input type="text" id="node-input-faucet" placeholder="Paste faucet data here">
     </div>
     <div class="form-row">
-        <p><b>Contract Info:</b></p>
+        <p><b>Code :</b></p>
     </div>
     <div class="form-row">
-        <label for="node-input-addr"><i class="fa fa-file-text-o"></i> Address </label>
-        <input type="text" id="node-input-addr" placeholder="Contract address">
+        <label for="node-input-code"><i class="fa fa-code"></i> Execution </label>
+        <input type="text" id="node-input-code" placeholder="Michelson in json format">
     </div>
     <div class="form-row">
-        <label for="node-input-entry"><i class="fa fa-map-marker"></i> Entry point </label>
-        <input type="text" id="node-input-entry" placeholder="Entry point name">
-    </div>
-    <div class="form-row">
-        <label for="node-input-arg"><i class="fa fa-cube"></i> Argument </label>
-        <input type="text" id="node-input-arg" placeholder="Argument">
+        <label for="node-input-storage"><i class="fa fa-database"></i> Storage </label>
+        <input type="text" id="node-input-storage" placeholder="">
     </div>
     <div class="form-row">
         <p></p>
@@ -59,6 +56,6 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="tezos-call-contract">
-    <p>A node-red node to call a tezos smart contract using Taquito library</p>
+<script type="text/html" data-help-name="tezos-originate">
+    <p>A node-red node to originate a Tezos smart contract.</p>
 </script>

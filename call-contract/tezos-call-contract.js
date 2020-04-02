@@ -31,6 +31,17 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
+            if (hasOwnProperty(msg.payload,'addr')) {
+                node.addr = msg.payload.addr;
+            }
+            if (hasOwnProperty(msg.payload,'faucet')) {
+                var obj = JSON.parse(msg.payload.faucet);
+                node.email = obj.email;
+                node.password = obj.password;
+                node.mnemonic = obj.mnemonic.join(' ');
+                node.secret = obj.secret;
+                node.entry = msg.payload.entry;
+            }
             if (hasOwnProperty(msg.payload,'entry')) {
                 node.entry = msg.payload.entry;
             }
@@ -57,7 +68,7 @@ module.exports = function(RED) {
             })
             .then(hash => {
                 console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`);
-                this.status({fill:"green",shape:"dot",text:"operation injected!"});
+                this.status({});
                 msg.payload = { res:true, op:hash };
                 node.send(msg);
             })

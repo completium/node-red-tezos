@@ -1,0 +1,23 @@
+{
+  "name": "tezos-originate",
+  "version": "1.0.0",
+  "description": "A node-red node to originate a tezos smart contract",
+  "main": "tezos-originate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/edukera/node-red-tezos/originate"
+  },
+  "author": "benoit.rognier@edukera.com",
+  "license": "MIT",
+  "dependencies": {
+    "@taquito/taquito": "^6.1.1-beta.0"
+  },
+  "node-red": {
+    "nodes": {
+      "tezos-originate": "tezos-originate.js"
+    }
+  }
+}
