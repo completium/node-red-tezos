@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tezos-get-contract',{
+        category: 'Tezos',
+        color: '#69a5ff',
+        defaults: {
+            name: { value:"" },
+            rpc: { value:"https://api.tez.ie/rpc/carthagenet" },
+            addr: { value:"" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "Tezos_40x60.svg",
+        label: function() {
+            return this.name||"get contract";
+        },
+        paletteLabel: "get contract"
+    });
+</script>
+
+<script type="text/html" data-template-name="tezos-get-contract">
+    <div class="form-row">
+        <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider </label>
+        <input type="text" id="node-input-rpc" placeholder="URL of RPC provider">
+    </div>
+    <div class="form-row">
+        <label for="node-input-addr"><i class="fa fa-file-text-o"></i> Address </label>
+        <input type="text" id="node-input-addr" placeholder="Contract address">
+    </div>
+    <div class="form-row">
+        <hr/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tezos-get-contract">
+    <p>A node-red node to get a Tezos smart contract (storage and api).</p>
+</script>

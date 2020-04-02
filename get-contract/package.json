@@ -1,0 +1,23 @@
+{
+  "name": "tezos-get-contract",
+  "version": "1.0.0",
+  "description": "A node-red node to get a Tezos smart contract (storage & entry point(s))",
+  "main": "tezos-get-contract.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/edukera/node-red-tezos/get-contract"
+  },
+  "author": "benoit.rognier@edukera.com",
+  "license": "MIT",
+  "dependencies": {
+    "@taquito/taquito": "^6.1.1-beta.0"
+  },
+  "node-red": {
+    "nodes": {
+      "tezos-get-contract": "tezos-get-contract.js"
+    }
+  }
+}
