@@ -1,9 +1,10 @@
 module.exports = function(RED) {
     'use stric';
     const { Tezos } = require('@taquito/taquito');
+    var objectConstructor = ({}).constructor;
     function hasOwnProperty(obj, prop) {
         var proto = obj.__proto__ || obj.constructor.prototype;
-        return (prop in obj) &&
+        return (obj.constructor === objectConstructor) && (prop in obj) &&
             (!(prop in proto) || proto[prop] !== obj[prop]);
     }
     function TezosOriginate(config) {
@@ -35,6 +36,7 @@ module.exports = function(RED) {
                 node.secret
             );
             this.status({fill:"grey",shape:"dot",text:"originating ..."});
+            console.log("calling originate ...");
             Tezos.contract.originate({
                 code: node.code,
                 storage: node.storage
@@ -42,9 +44,8 @@ module.exports = function(RED) {
                 this.status({fill:"green",shape:"dot",text:"retrieving address ..."});
                 return originationOp.contract();
             }).then(contract => {
-                console.log(contract.contractAddress);
                 this.status({});
-                msg.payload = { res:true, addr:contract.contractAddress};
+                msg.payload = { res:true, addr:contract.address};
                 node.send(msg);
             })
             .catch(error => {

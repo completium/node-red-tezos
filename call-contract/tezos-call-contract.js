@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     'use stric';
     const { Tezos } = require('@taquito/taquito');
+    var objectConstructor = ({}).constructor;
     function executeFunctionByName(functionName, context /*, args */) {
         //var args = Array.prototype.slice.call(arguments, 2);
         var args = arguments[2];
@@ -14,7 +15,7 @@ module.exports = function(RED) {
     }
     function hasOwnProperty(obj, prop) {
         var proto = obj.__proto__ || obj.constructor.prototype;
-        return (prop in obj) &&
+        return (obj.constructor === objectConstructor) && (prop in obj) &&
             (!(prop in proto) || proto[prop] !== obj[prop]);
     }
     function TezosCallContract(config) {
