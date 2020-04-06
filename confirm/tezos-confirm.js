@@ -13,11 +13,12 @@ module.exports = function(RED) {
         this.confirmation = config.confirmation;
         console.log(`confirmation: ${this.confirmation}`)
         var node = this;
-        node.on('input', function(op) {
+        node.on('input', function(msg) {
+            var op = msg.payload.op;
             Tezos.setProvider({ rpc: node.rpc });
             console.log(`Waiting for ${op.hash} to be confirmed...`);
             this.status({fill:"blue",shape:"dot",text:"waiting for confirmation ..."});
-            op.confirmation(this.confirmation)
+            op.confirmation(node.confirmation)
             .then(op => {
                 console.log(`Operation injected: https://carthagenet.tzstats.com/${op.hash}`);
                 this.status({});
