@@ -65,7 +65,7 @@ module.exports = function(RED) {
             .then(op => {
                 console.log(`Operation ${op.hash} created.`);
                 this.status({});
-                msg.payload = { res:false, op: op };
+                msg.payload = { res:true, op: op };
                 node.send(msg);
             })
             .catch(error => {

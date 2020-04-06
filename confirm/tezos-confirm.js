@@ -11,18 +11,18 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
         this.confirmation = config.confirmation;
-        console.log(`confirmation: ${this.confirmation}`)
         var node = this;
         node.on('input', function(msg) {
             var op = msg.payload.op;
+            var hash = op.hash;
             Tezos.setProvider({ rpc: node.rpc });
             console.log(`Waiting for ${op.hash} to be confirmed...`);
             this.status({fill:"blue",shape:"dot",text:"waiting for confirmation ..."});
             op.confirmation(node.confirmation)
-            .then(op => {
-                console.log(`Operation injected: https://carthagenet.tzstats.com/${op.hash}`);
+            .then(() => {
+                console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`);
                 this.status({});
-                msg.payload = { res:true, op:op.hash };
+                msg.payload = { res:true, op:hash };
                 node.send(msg);
             })
             .catch(error => {
