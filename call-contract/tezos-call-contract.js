@@ -65,12 +65,12 @@ module.exports = function(RED) {
             .then(op => {
                 console.log(`Waiting for ${op.hash} to be confirmed...`);
                 this.status({fill:"blue",shape:"dot",text:"waiting for confirmation ..."});
-                return op.confirmation(1).then(() => op.hash);
+                return op.confirmation(1).then(() => op);
             })
-            .then(hash => {
-                console.log(`Operation injected: https://carthagenet.tzstats.com/${hash}`);
+            .then(op => {
+                console.log(`Operation injected: https://carthagenet.tzstats.com/${op.hash}`);
                 this.status({});
-                msg.payload = { res:true, op:hash };
+                msg.payload = { res:true, op:op.hash };
                 node.send(msg);
             })
             .catch(error => {
