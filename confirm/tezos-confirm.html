@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tezos-confirm',{
+        category: 'Tezos',
+        color: '#69a5ff',
+        defaults: {
+            name: { value:"" },
+            rpc: { value:"https://api.tez.ie/rpc/carthagenet" },
+            confirmation: { value: 10 }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "Tezos_40x60.svg",
+        label: function() {
+            return this.name||"confirm";
+        },
+        paletteLabel: "confirm",
+    });
+</script>
+
+<script type="text/html" data-template-name="tezos-confirm">
+    <div class="form-row">
+        <label for="node-input-rpc"><i class="fa fa-link"></i> Rpc provider </label>
+        <input type="text" id="node-input-rpc" placeholder="URL of RPC provider">
+    </div>
+    <div class="form-row">
+        <p><b>Settings :</b></p>
+    </div>
+    <div class="form-row">
+        <label for="node-input-confirmation"><i class="fa fa-code"></i> Execution </label>
+        <input type="text" id="node-input-confirmation" placeholder="number of confirmation">
+    </div>
+    <div class="form-row">
+        <hr/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tezos-confirm">
+    <p>A node-red node to confirm a Tezos smart contract.</p>
+</script>

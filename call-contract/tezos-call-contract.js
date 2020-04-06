@@ -63,15 +63,9 @@ module.exports = function(RED) {
                 return executeFunctionByName("methods."+node.entry, contract, node.args).send();
             })
             .then(op => {
-                console.log(`Waiting for ${op.hash} to be confirmed...`);
-                this.status({fill:"blue",shape:"dot",text:"waiting for confirmation ..."});
-                return op.confirmation(1).then(() => op);
-            })
-            .then(op => {
-                console.log(`Operation injected: https://carthagenet.tzstats.com/${op.hash}`);
+                console.log(`Operation ${op.hash} created.`);
                 this.status({});
-                msg.payload = { res:true, op:op.hash };
-                node.send(msg);
+                node.send(op);
             })
             .catch(error => {
                 console.log(`Error: ${JSON.stringify(error, null, 2)}`);
