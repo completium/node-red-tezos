@@ -16,8 +16,8 @@ module.exports = function(RED) {
         this.mnemonic = obj.mnemonic.join(' ');
         this.secret = obj.secret;
         this.entry = config.entry;
-        this.code = JSON.parse(config.code);
-        this.storage = JSON.parse(config.storage);
+        try { this.code = JSON.parse(config.code); } catch (e) { }
+        try { this.storage = JSON.parse(config.storage); } catch (e) { }
         //this.vars = config.vars;
         var node = this;
         node.on('input', function(msg) {
