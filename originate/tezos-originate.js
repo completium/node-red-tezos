@@ -23,7 +23,7 @@ module.exports = function(RED) {
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
             if (hasOwnProperty(msg.payload,'code')) {
-                node.code = JSON.parse(msg.payload.entry);
+                node.code = JSON.parse(msg.payload.code);
             }
             if (hasOwnProperty(msg.payload,'storage')) {
                 node.storage = JSON.parse(msg.payload.storage);
