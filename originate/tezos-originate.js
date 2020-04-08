@@ -20,6 +20,7 @@ module.exports = function(RED) {
         try { this.storage = JSON.parse(config.storage); } catch (e) { }
         //this.vars = config.vars;
         var node = this;
+        var withInit = false;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
             if (hasOwnProperty(msg.payload,'code')) {
@@ -27,6 +28,9 @@ module.exports = function(RED) {
             }
             if (hasOwnProperty(msg.payload,'storage')) {
                 node.storage = msg.payload.storage;
+            } else if (hasOwnProperty(msg.payload,'init')) {
+                withInit = true;
+                node.init = msg.payload.init;
             }
             Tezos.setProvider({ rpc: node.rpc });
             Tezos.importKey(
@@ -37,10 +41,19 @@ module.exports = function(RED) {
             );
             this.status({fill:"grey",shape:"dot",text:"originating ..."});
             console.log("calling originate ...");
-            Tezos.contract.originate({
-                code: node.code,
-                storage: node.storage
-            }).then(originationOp => {
+            var arg;
+            if (withInit) {
+                arg = {
+                    code: node.code,
+                    init: node.init
+                }
+            } else {
+                arg = {
+                    code: node.code,
+                    storage: node.storage
+                }
+            }
+            Tezos.contract.originate(arg).then(originationOp => {
                 this.status({fill:"green",shape:"dot",text:"retrieving address ..."});
                 return originationOp.contract();
             }).then(contract => {
