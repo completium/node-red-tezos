@@ -48,7 +48,7 @@ module.exports = function(RED) {
             );
             this.status({fill:"grey",shape:"dot",text:"transfering ..."});
             console.log("transferring ...");
-            Tezos.contract.transfer({ to: node.desitnation, amount: node.amount })
+            Tezos.contract.transfer({ to: node.destination, amount: node.amount })
             .then(op => {
                 console.log(`Operation ${op.hash} created.`);
                 this.status({});
