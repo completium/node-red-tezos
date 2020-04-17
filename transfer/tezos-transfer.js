@@ -47,16 +47,14 @@ module.exports = function(RED) {
                 node.secret
             );
             this.status({fill:"grey",shape:"dot",text:"transfering ..."});
-            console.log("transfer ...");
+            console.log("transferring ...");
             Tezos.contract.transfer({ to: node.desitnation, amount: node.amount })
             .then(op => {
-                console.log(`Waiting for ${op.hash} to be confirmed...`);
-                this.status({fill:"grey",shape:"dot",text:"confirming ..."});
-                return op.confirmation(1).then(() => op.hash);
+                console.log(`Operation ${op.hash} created.`);
+                this.status({});
+                msg.payload = { res:true, op: op };
+                node.send(msg);
             })
-            .then(hash =>
-                this.status({fill:"green",shape:"dot",text:"success!"})
-            )
             .catch(error => {
                 console.log(`Error: ${JSON.stringify(error, null, 2)}`);
                 this.status({fill:"red",shape:"dot",text:"fail!"})
