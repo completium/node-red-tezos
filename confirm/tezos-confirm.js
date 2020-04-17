@@ -20,7 +20,7 @@ module.exports = function (RED) {
                 this.status({ fill: "blue", shape: "dot", text: "waiting for confirmation ..." });
                 op.confirmation(node.confirmation)
                     .then(() => {
-                        console.log(`Operation injected: https://carthagenet.tzstats.com/${op.hash}`);
+                        console.log(`Operation injected: ${op.hash}`);
                         this.status({});
                         msg.payload = { res: true, op: op.hash };
                         node.send(msg);
