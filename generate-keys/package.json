@@ -1,0 +1,23 @@
+{
+  "name": "tezos-generate",
+  "version": "1.0.0",
+  "description": "A node-red node to generate a tezos smart contract",
+  "main": "tezos-generate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/edukera/node-red-tezos/generate"
+  },
+  "author": "benoit.rognier@edukera.com",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "tezos-generate": "tezos-generate.js"
+    }
+  },
+  "dependencies": {
+    "conseiljs": "^0.4.1"
+  }
+}

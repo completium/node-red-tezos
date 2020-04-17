@@ -1,0 +1,35 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tezos-generate',{
+        category: 'Tezos',
+        color: '#69a5ff',
+        defaults: {
+            name: { value:"" },
+            mnemonic: { value:"" },
+        },
+        inputs:1,
+        outputs:1,
+        icon: "Tezos_40x60.svg",
+        label: function() {
+            return this.name||"generate";
+        },
+        paletteLabel: "generate",
+        oneditprepare: function() {
+            $("#node-input-mnemonice").typedInput({default:'json',types:['json']});
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="tezos-generate">
+    <div class="form-row">
+        <label for="node-input-mnemonic"><i class="fa fa-key"></i> Mnemonic </label>
+        <input type="text" id="node-input-mnemonic" placeholder="20 words">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="tezos-generate">
+    <p>A node-red node to generate a Tezos smart contract.</p>
+</script>
