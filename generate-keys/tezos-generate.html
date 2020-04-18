@@ -12,7 +12,7 @@
         label: function() {
             return this.name||"generate";
         },
-        paletteLabel: "generate",
+        paletteLabel: "generate keys",
         oneditprepare: function() {
             $("#node-input-mnemonice").typedInput({default:'json',types:['json']});
         }
@@ -31,5 +31,5 @@
 </script>
 
 <script type="text/html" data-help-name="tezos-generate">
-    <p>A node-red node to generate new Tezos account keys.</p>
+    <p>Generates new Tezos account's keys (public, public hash and private).</p>
 </script>
