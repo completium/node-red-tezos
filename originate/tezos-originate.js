@@ -10,11 +10,13 @@ module.exports = function(RED) {
     function TezosOriginate(config) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
-        var obj = JSON.parse(config.faucet);
-        this.email = obj.email;
-        this.password = obj.password;
-        this.mnemonic = obj.mnemonic.join(' ');
-        this.secret = obj.secret;
+        try {
+            var obj = JSON.parse(config.faucet);
+            this.email = obj.email;
+            this.password = obj.password;
+            this.mnemonic = obj.mnemonic.join(' ');
+            this.secret = obj.secret;
+        } catch (e) {}
         this.entry = config.entry;
         try { this.code = JSON.parse(config.code); } catch (e) { }
         try { this.storage = JSON.parse(config.storage); } catch (e) { }
@@ -23,6 +25,15 @@ module.exports = function(RED) {
         var withInit = false;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
+            if (hasOwnProperty(msg.payload,'faucet')) {
+                try {
+                    var obj = JSON.parse(msg.payload.faucet);
+                    node.email = obj.email;
+                    node.password = obj.password;
+                    node.mnemonic = obj.mnemonic.join(' ');
+                    node.secret = obj.secret;
+                } catch (e) { }
+            }
             if (hasOwnProperty(msg.payload,'code')) {
                 node.code = msg.payload.code;
             }

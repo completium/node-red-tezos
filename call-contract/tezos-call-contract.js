@@ -22,11 +22,13 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
         this.addr = config.addr;
-        var obj = JSON.parse(config.faucet);
-        this.email = obj.email;
-        this.password = obj.password;
-        this.mnemonic = obj.mnemonic.join(' ');
-        this.secret = obj.secret;
+        try {
+            var obj = JSON.parse(config.faucet);
+            this.email = obj.email;
+            this.password = obj.password;
+            this.mnemonic = obj.mnemonic.join(' ');
+            this.secret = obj.secret;
+        } catch(e) {}
         this.entry = config.entry;
         this.args = [config.arg];
         var node = this;
