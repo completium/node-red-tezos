@@ -25,12 +25,12 @@ module.exports = function (RED) {
                         msg.payload = { res: true, op: op.hash };
                         node.send(msg);
                     })
-                    .catch(error => {
-                        console.log(`Error: ${JSON.stringify(error, null, 2)}`);
-                        this.status({ fill: "red", shape: "ring", text: "fail" });
-                        msg.payload = { res: false };
-                        node.send(msg);
-                    });
+                    // .catch(error => {
+                    //     console.log(`Error: ${JSON.stringify(error, null, 2)}`);
+                    //     this.status({ fill: "red", shape: "ring", text: "fail" });
+                    //     msg.payload = { res: false };
+                    //     node.send(msg);
+                    // });
             } else {
                 msg.payload = { res: false };
                 node.send(msg);
