@@ -18,7 +18,7 @@ module.exports = function (RED) {
                 Tezos.setProvider({ rpc: node.rpc });
                 console.log(`Waiting for ${op.hash} to be confirmed...`);
                 this.status({ fill: "blue", shape: "dot", text: "waiting for confirmation ..." });
-                op.confirmation(node.confirmation)
+                op.confirmation(1)
                     .then(() => {
                         console.log(`Operation injected: ${op.hash}`);
                         this.status({});

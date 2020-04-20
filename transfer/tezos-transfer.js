@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     'use stric';
     const { Tezos } = require('@taquito/taquito');
+    const { InMemorySigner } = require ('@taquito/signer');
     var objectConstructor = ({}).constructor;
     function hasOwnProperty(obj, prop) {
         var proto = obj.__proto__ || obj.constructor.prototype;
@@ -39,15 +40,22 @@ module.exports = function(RED) {
             if (hasOwnProperty(msg.payload,'amount')) {
                 node.amount = msg.payload.amount;
             }
-            Tezos.setProvider({ rpc: node.rpc });
-            Tezos.importKey(
-                node.email,
-                node.password,
-                node.mnemonic,
-                node.secret
-            );
+            var provider = { rpc: node.rpc };
+            if (hasOwnProperty(msg.payload,'secret')) {
+                provider.signer = new InMemorySigner(msg.payload.secret);
+                Tezos.setProvider(provider);
+            } else {
+                Tezos.setProvider(provider);
+                Tezos.importKey(
+                    node.email,
+                    node.password,
+                    node.mnemonic,
+                    node.secret
+                );
+            }
+
             this.status({fill:"grey",shape:"dot",text:"transfering ..."});
-            console.log("transferring ...");
+            console.log("transferring "+node.amount+" to "+node.destination);
             Tezos.contract.transfer({ to: node.destination, amount: node.amount })
             .then(op => {
                 console.log(`Operation ${op.hash} created.`);
