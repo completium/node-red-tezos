@@ -3,11 +3,6 @@ module.exports = function(RED) {
     const { Tezos } = require('@taquito/taquito');
     const { InMemorySigner } = require ('@taquito/signer');
     var objectConstructor = ({}).constructor;
-    function hasOwnProperty(obj, prop) {
-        var proto = obj.__proto__ || obj.constructor.prototype;
-        return (obj.constructor === objectConstructor) && (prop in obj) &&
-            (!(prop in proto) || proto[prop] !== obj[prop]);
-    }
     function TezosOriginate(config) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
@@ -26,7 +21,7 @@ module.exports = function(RED) {
         var withInit = false;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
-            if (hasOwnProperty(msg.payload,'faucet')) {
+            if ('faucet' in msg.payload) {
                 try {
                     var obj = JSON.parse(msg.payload.faucet);
                     node.email = obj.email;
@@ -35,17 +30,17 @@ module.exports = function(RED) {
                     node.secret = obj.secret;
                 } catch (e) { }
             }
-            if (hasOwnProperty(msg.payload,'code')) {
+            if ('code' in msg.payload) {
                 node.code = msg.payload.code;
             }
-            if (hasOwnProperty(msg.payload,'storage')) {
+            if ('storage' in msg.payload) {
                 node.storage = msg.payload.storage;
-            } else if (hasOwnProperty(msg.payload,'init')) {
+            } else if ('init' in msg.payload) {
                 withInit = true;
                 node.init = msg.payload.init;
             }
             var provider = { rpc: node.rpc };
-            if (hasOwnProperty(msg.payload,'secret')) {
+            if ('secret' in msg.payload) {
                 provider.signer = new InMemorySigner(msg.payload.secret);
                 Tezos.setProvider(provider);
             } else {

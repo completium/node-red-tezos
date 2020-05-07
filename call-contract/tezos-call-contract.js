@@ -14,11 +14,6 @@ module.exports = function(RED) {
         //console.log(args);
         return context[func].apply(context, args);
     }
-    function hasOwnProperty(obj, prop) {
-        var proto = obj.__proto__ || obj.constructor.prototype;
-        return (obj.constructor === objectConstructor) && (prop in obj) &&
-            (!(prop in proto) || proto[prop] !== obj[prop]);
-    }
     function TezosCallContract(config) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
@@ -35,10 +30,11 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
-            if (hasOwnProperty(msg.payload,'addr')) {
+            if ('addr' in msg.payload) {
+                console.log("payload has addr field");
                 node.addr = msg.payload.addr;
             }
-            if (hasOwnProperty(msg.payload,'faucet')) {
+            if ('faucet' in msg.payload) {
                 var obj = JSON.parse(msg.payload.faucet);
                 node.email = obj.email;
                 node.password = obj.password;
@@ -46,14 +42,14 @@ module.exports = function(RED) {
                 node.secret = obj.secret;
                 node.entry = msg.payload.entry;
             }
-            if (hasOwnProperty(msg.payload,'entry')) {
+            if ('entry' in msg.payload) {
                 node.entry = msg.payload.entry;
             }
-            if (hasOwnProperty(msg.payload,'args')) {
+            if ('args' in msg.payload) {
                 node.args = msg.payload.args;
             }
             var provider = { rpc: node.rpc };
-            if (hasOwnProperty(msg.payload,'secret')) {
+            if ('secret' in msg.payload) {
                 provider.signer = new InMemorySigner(msg.payload.secret);
                 Tezos.setProvider(provider);
             } else {

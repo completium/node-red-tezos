@@ -2,11 +2,6 @@ module.exports = function(RED) {
     'use stric';
     const { Tezos } = require('@taquito/taquito');
     var objectConstructor = ({}).constructor;
-    function hasOwnProperty(obj, prop) {
-        var proto = obj.__proto__ || obj.constructor.prototype;
-        return (obj.constructor === objectConstructor) && (prop in obj) &&
-            (!(prop in proto) || proto[prop] !== obj[prop]);
-    }
     function TezosGetContract(config) {
         RED.nodes.createNode(this,config);
         this.rpc = config.rpc;
@@ -15,7 +10,7 @@ module.exports = function(RED) {
         var methods = [];
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
-            if (hasOwnProperty(msg.payload,'addr')) {
+            if ('addr' in msg.payload) {
                 node.addr = msg.payload.addr;
             }
             Tezos.setProvider({ rpc: node.rpc });

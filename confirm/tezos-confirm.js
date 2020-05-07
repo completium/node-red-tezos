@@ -2,18 +2,13 @@ module.exports = function (RED) {
     'use stric';
     const { Tezos } = require('@taquito/taquito');
     var objectConstructor = ({}).constructor;
-    function hasOwnProperty(obj, prop) {
-        var proto = obj.__proto__ || obj.constructor.prototype;
-        return (obj.constructor === objectConstructor) && (prop in obj) &&
-            (!(prop in proto) || proto[prop] !== obj[prop]);
-    }
     function TezosConfirm(config) {
         RED.nodes.createNode(this, config);
         this.rpc = config.rpc;
         this.confirmation = config.confirmation;
         var node = this;
         node.on('input', function (msg) {
-            if (hasOwnProperty(msg.payload, 'op')) {
+            if ('op' in msg.payload) {
                 var op = msg.payload.op;
                 Tezos.setProvider({ rpc: node.rpc });
                 console.log(`Waiting for ${op.hash} to be confirmed...`);

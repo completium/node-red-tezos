@@ -2,11 +2,6 @@ module.exports = function(RED) {
     'use stric';
     const { TezosWalletUtil }  = require('conseiljs');
     var objectConstructor = ({}).constructor;
-    function hasOwnProperty(obj, prop) {
-        var proto = obj.__proto__ || obj.constructor.prototype;
-        return (obj.constructor === objectConstructor) && (prop in obj) &&
-            (!(prop in proto) || proto[prop] !== obj[prop]);
-    }
     function TezosGenerate(config) {
         RED.nodes.createNode(this,config);
         try {
@@ -17,12 +12,12 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
-            if (hasOwnProperty(msg.payload,'mnemonic')) {
+            if ('mnemonic' in msg.payload) {
                 try {
                     var obj = JSON.parse(msg.payload.mnemonic);
                     node.mnemonic = obj.mnemonic.join(' ');
                 } catch (e) { }
-            } else if (hasOwnProperty(node,'mnemonic')) {
+            } else if ('mnemonic' in node) {
                 // do nothing
             } else {
                 node.mnemonic = TezosWalletUtil.generateMnemonic();
