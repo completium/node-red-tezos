@@ -74,7 +74,16 @@ module.exports = function(RED) {
             .then(op => {
                 console.log(`Operation ${op.hash} created.`);
                 this.status({});
-                msg.payload = { res:true, op: op };
+                msg.payload.call = {
+                    res:true,
+                    op: {
+                        "hash"    : op.hash,
+                        "raw"     : op.raw,
+                        "results" : op.results,
+                        "context" : op.context,
+                        "params"  : op.params
+                    }
+                };
                 node.send(msg);
             })
             .catch(error => {
