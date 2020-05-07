@@ -65,7 +65,7 @@ module.exports = function(RED) {
                     node.secret
                 );
             }
-            console.log(`Calling "${node.entry}"`);
+            console.log(`Calling "${node.entry}" of "${node.addr}"`);
             Tezos.contract.at(node.addr)
             .then(contract => {
                 console.log(`Calling "${node.entry}" with arg ${node.args}...`);
