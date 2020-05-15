@@ -73,14 +73,22 @@ module.exports = function(RED) {
                 this.status({});
                 msg.payload.call = {
                     res:true,
-                    op: {
+                    op: op
+                   /*  {
                         "hash"    : op.hash,
                         "raw"     : op.raw,
                         "results" : op.results,
                         "context" : op.context,
-                        "params"  : op.params
-                    }
+                        "_pollingConfig$" : op._pollingConfig$,
+                        "currentHead$" : op._currentHead$,
+                        "polling$" : op.polling$,
+                        "confirmed$" : op.confirmed$,
+                        "_foundAt" : op._foundAt,
+                        "params" : op.params,
+                        "source" : op.source
+                    } */
                 };
+                //delete msg.payload.call.op._pollingConfig$;
                 node.send(msg);
             })
             .catch(error => {
