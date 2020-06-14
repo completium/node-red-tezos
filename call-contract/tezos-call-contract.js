@@ -73,7 +73,12 @@ module.exports = function(RED) {
                 this.status({});
                 msg.payload.call = {
                     res:true,
-                    op: op
+                    op : {
+                        hash : op.hash,
+                        source : op.source,
+                        params : op.params,
+                        date : Date.now()
+                    }
                    /*  {
                         "hash"    : op.hash,
                         "raw"     : op.raw,
