@@ -27,6 +27,7 @@ module.exports = function(RED) {
         } catch(e) {}
         this.entry = config.entry;
         this.args = [config.arg];
+        this.amount = config.amount;
         var node = this;
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
@@ -61,12 +62,15 @@ module.exports = function(RED) {
                     node.secret
                 );
             }
+            if ('amount' in msg.payload) {
+                node.amount = msg.payload.amount;
+            }
             console.log(`Calling "${node.entry}" of "${node.addr}"`);
             Tezos.contract.at(node.addr)
             .then(contract => {
-                console.log(`Calling "${node.entry}" with arg ${node.args}...`);
+                console.log(`Calling "${node.entry}" of "${node.addr}" with args ${node.args} with ${node.amount}ꜩ ...`);
                 this.status({fill:"grey",shape:"dot",text:"calling ..."});
-                return executeFunctionByName("methods."+node.entry, contract, node.args).send();
+                return executeFunctionByName("methods."+node.entry, contract, node.args).send({ amount: node.amount});
             })
             .then(op => {
                 console.log(`Operation ${op.hash} created.`);
@@ -79,21 +83,7 @@ module.exports = function(RED) {
                         params : op.params,
                         date : Date.now()
                     }
-                   /*  {
-                        "hash"    : op.hash,
-                        "raw"     : op.raw,
-                        "results" : op.results,
-                        "context" : op.context,
-                        "_pollingConfig$" : op._pollingConfig$,
-                        "currentHead$" : op._currentHead$,
-                        "polling$" : op.polling$,
-                        "confirmed$" : op.confirmed$,
-                        "_foundAt" : op._foundAt,
-                        "params" : op.params,
-                        "source" : op.source
-                    } */
                 };
-                //delete msg.payload.call.op._pollingConfig$;
                 node.send(msg);
             })
             .catch(error => {

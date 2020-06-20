@@ -5,8 +5,9 @@
         defaults: {
             name: { value:"" },
             rpc: { value:"https://api.tez.ie/rpc/mainnet" },
-            addr: { value:'tz1NAozDvi5e7frVq9cUaC3uXQQannemB8Jw' },
+            addr: { value:"" },
             faucet: { value:"" },
+            amount: { value:"0" },
             entry: { value:"" },
             arg: { value:""}
         },
@@ -31,6 +32,10 @@
     <div class="form-row">
         <label for="node-input-faucet"><i class="fa fa-user-circle"></i> Faucet </label>
         <input type="text" id="node-input-faucet" placeholder="Paste faucet data here">
+    </div>
+    <div class="form-row">
+        <label for="node-input-amount"><i class="fa fa-money"></i> Amount </label>
+        <input type="number" id="node-input-amount" placeholder="Amount to transfer">
     </div>
     <div class="form-row">
         <p><b>Contract Info:</b></p>
