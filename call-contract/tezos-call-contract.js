@@ -62,6 +62,7 @@ module.exports = function(RED) {
                     node.secret
                 );
             }
+            node.amount = 0;
             if ('amount' in msg.payload) {
                 node.amount = msg.payload.amount;
             }
