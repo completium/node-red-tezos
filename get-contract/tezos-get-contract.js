@@ -10,7 +10,7 @@ module.exports = function(RED) {
         var methods = [];
         node.on('input', function(msg) {
             // overwrite node parameter with payload data
-            if ('addr' in msg.payload) {
+            if (Array.isArray(msg.payload) && 'addr' in msg.payload) {
                 node.addr = msg.payload.addr;
             }
             Tezos.setProvider({ rpc: node.rpc });
