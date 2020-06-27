@@ -18,8 +18,6 @@
         paletteLabel: "originate",
         oneditprepare: function() {
             $("#node-input-faucet").typedInput({default:'json',types:['json']});
-            $("#node-input-code").typedInput({default:'json',types:['json']});
-            $("#node-input-storage").typedInput({default:'json',types:['json']});
         }
     });
 </script>
@@ -32,20 +30,6 @@
     <div class="form-row">
         <label for="node-input-faucet"><i class="fa fa-user-circle"></i> Faucet </label>
         <input type="text" id="node-input-faucet" placeholder="Paste faucet data here">
-    </div>
-    <div class="form-row">
-        <p><b>Code :</b></p>
-    </div>
-    <div class="form-row">
-        <label for="node-input-code"><i class="fa fa-code"></i> Execution </label>
-        <input type="text" id="node-input-code" placeholder="Michelson in json format">
-    </div>
-    <div class="form-row">
-        <label for="node-input-storage"><i class="fa fa-database"></i> Storage </label>
-        <input type="text" id="node-input-storage" placeholder="">
-    </div>
-    <div class="form-row">
-        <p></p>
     </div>
     <div class="form-row">
         <hr/>

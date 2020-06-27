@@ -14,8 +14,6 @@ module.exports = function(RED) {
             this.secret = obj.secret;
         } catch (e) {}
         this.entry = config.entry;
-        try { this.code = JSON.parse(config.code); } catch (e) { }
-        try { this.storage = JSON.parse(config.storage); } catch (e) { }
         //this.vars = config.vars;
         var node = this;
         var withInit = false;
@@ -30,15 +28,8 @@ module.exports = function(RED) {
                     node.secret = obj.secret;
                 } catch (e) { }
             }
-            if (Array.isArray(msg.payload) && 'code' in msg.payload) {
-                node.code = msg.payload.code;
-            }
-            if (Array.isArray(msg.payload) && 'storage' in msg.payload) {
-                node.storage = msg.payload.storage;
-            } else if (Array.isArray(msg.payload) && 'init' in msg.payload) {
-                withInit = true;
-                node.init = msg.payload.init;
-            }
+            node.code = msg.payload.code;
+            node.init = msg.payload.init;
             var provider = { rpc: node.rpc };
             if (Array.isArray(msg.payload) && 'secret' in msg.payload) {
                 provider.signer = new InMemorySigner(msg.payload.secret);
@@ -54,18 +45,10 @@ module.exports = function(RED) {
             }
             this.status({fill:"grey",shape:"dot",text:"originating ..."});
             console.log("calling originate ...");
-            var arg;
-            if (withInit) {
-                arg = {
+            var arg = {
                     code: node.code,
                     init: node.init
                 }
-            } else {
-                arg = {
-                    code: node.code,
-                    storage: node.storage
-                }
-            }
             Tezos.contract.originate(arg).then(originationOp => {
                 this.status({fill:"green",shape:"dot",text:"retrieving address ..."});
                 return originationOp.contract();
