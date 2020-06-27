@@ -29,7 +29,7 @@ module.exports = function(RED) {
                 } catch (e) { }
             }
             node.code = msg.payload.code;
-            node.init = msg.payload.init;
+            node.init = msg.payload.storage;
             var provider = { rpc: node.rpc };
             if (Array.isArray(msg.payload) && 'secret' in msg.payload) {
                 provider.signer = new InMemorySigner(msg.payload.secret);
